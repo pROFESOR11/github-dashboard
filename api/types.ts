@@ -107,6 +107,6 @@ export interface Repo {
 export interface SearchResponse {
   total_count: number;
   incomplete_results: boolean;
-  hasNext: boolean;
+  hasMore: boolean;
   items: Repo[];
 }
