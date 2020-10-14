@@ -14,6 +14,7 @@ import { getRepos } from "../api/getRepos";
 
 import RepoCards from "../components/RepoCards";
 import useIntersectionObserver from "../src/useIntersectionObserver";
+import { deleteUndefined } from "../utils/deleteUndefined";
 
 const initialSearchQuery = "front end";
 
@@ -82,8 +83,6 @@ export default function Landing() {
     setqueryStr(searchStr);
   }, [searchStr, setqueryStr]);
 
-  console.log("queryStr", queryStr);
-
   return (
     <Container maxWidth="xl" className={classes.root}>
       <Box className={classes.header}>
@@ -126,8 +125,8 @@ export async function getStaticProps() {
   if (!dehydratedState) return null;
 
   return {
-    props: {
+    props: deleteUndefined({
       dehydratedState,
-    },
+    }),
   };
 }
