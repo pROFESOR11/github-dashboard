@@ -11,7 +11,9 @@ const useStyles = makeStyles({
     cursor: "pointer",
   },
   tooltip: {
-    backgroundColor: "blue",
+    backgroundColor: "white",
+    color: "#2a2a72",
+    fontWeight: "bold",
   },
 });
 
@@ -34,7 +36,12 @@ const ClickableNavigator: React.FC<ClickableNavigatorProps> = ({
 
   if (tooltip) {
     return (
-      <Tooltip className={classes.tooltip} title={tooltip}>
+      <Tooltip
+        classes={{
+          tooltip: classes.tooltip,
+        }}
+        title={tooltip}
+      >
         {clickableComponent}
       </Tooltip>
     );
