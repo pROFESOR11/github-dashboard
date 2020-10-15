@@ -1,14 +1,18 @@
-import { Box, makeStyles, Tooltip } from "@material-ui/core";
+import { Box, makeStyles, Tooltip, TooltipProps } from "@material-ui/core";
 import React from "react";
 
-interface ClickableNavigatorProps {
-  url: string;
-  tooltip?: string | React.ReactNode;
+interface WithTooltipProps {
+  url?: string;
+  tooltip: string | React.ReactNode;
+  tooltipProps?: Partial<TooltipProps>;
 }
 
 const useStyles = makeStyles({
-  root: {
+  pointer: {
     cursor: "pointer",
+  },
+  help: {
+    cursor: "help",
   },
   tooltip: {
     backgroundColor: "white",
@@ -17,19 +21,21 @@ const useStyles = makeStyles({
   },
 });
 
-const ClickableNavigator: React.FC<ClickableNavigatorProps> = ({
+const WithTooltip: React.FC<WithTooltipProps> = ({
   url,
   tooltip,
+  tooltipProps,
   children,
 }) => {
   const classes = useStyles();
 
   const handleClick = React.useCallback(() => {
+    if (!url) return;
     window.open(url, "_blank");
   }, [url]);
 
   const clickableComponent = (
-    <Box className={classes.root} onClick={handleClick}>
+    <Box className={url ? classes.pointer : classes.help} onClick={handleClick}>
       {children}
     </Box>
   );
@@ -41,6 +47,7 @@ const ClickableNavigator: React.FC<ClickableNavigatorProps> = ({
           tooltip: classes.tooltip,
         }}
         title={tooltip}
+        {...tooltipProps}
       >
         {clickableComponent}
       </Tooltip>
@@ -50,4 +57,4 @@ const ClickableNavigator: React.FC<ClickableNavigatorProps> = ({
   return clickableComponent;
 };
 
-export default ClickableNavigator;
+export default WithTooltip;
