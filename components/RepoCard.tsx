@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { Avatar, CardHeader, Box } from "@material-ui/core";
 import RepoStats from "./RepoStats";
 import UpdateIcon from "@material-ui/icons/Update";
+import ClickableNavigator from "./ClickableNavigator";
 
 const RepoCard = React.memo(({ repo }: { repo: Repo }) => {
   const {
@@ -22,7 +23,7 @@ const RepoCard = React.memo(({ repo }: { repo: Repo }) => {
     forks_count,
     watchers_count,
   } = repo;
-  const { id: ownerId, login, avatar_url, url: ownerUrl } = repo.owner;
+  const { login, avatar_url, html_url: ownerUrl } = repo.owner;
 
   const classes = useStyles();
 
@@ -32,11 +33,15 @@ const RepoCard = React.memo(({ repo }: { repo: Repo }) => {
     <Card className={classes.root}>
       <CardHeader
         className={classes.header}
-        avatar={<Avatar src={avatar_url} alt="Owner Avatar" />}
-        title={<Typography>{login}</Typography>}
+        avatar={
+          <ClickableNavigator url={ownerUrl} tooltip={`Go to ${login} profile`}>
+            <Avatar src={avatar_url} alt={login} />
+          </ClickableNavigator>
+        }
+        title={<Typography>{repoName}</Typography>}
         subheader={
           <Box className={classes.subHeader}>
-            <Typography>{repoName}</Typography>
+            <Typography>{login}</Typography>
             <Box className={classes.subHeaderRight}>
               <UpdateIcon />
               <Typography className={classes.updatedText} variant="subtitle2">
