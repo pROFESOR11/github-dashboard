@@ -1,6 +1,6 @@
 import React from "react";
 import { SearchResponse } from "../api/types";
-import { Grid } from "@material-ui/core";
+import { Box, CircularProgress, Grid, makeStyles } from "@material-ui/core";
 import RepoCard from "./RepoCard";
 
 interface Repos {
@@ -8,8 +8,15 @@ interface Repos {
 }
 
 const RepoCards = React.memo(({ paginatedData }: Repos) => {
+  const classes = useStyles();
+
   // TODO: Handle Not Found & Loading UI
-  if (!paginatedData) return <div>loading</div>;
+  if (!paginatedData)
+    return (
+      <Box className={classes.indicator}>
+        <CircularProgress color="secondary" size="5rem" />
+      </Box>
+    );
   if (paginatedData.length === 0) return <div>not found</div>;
 
   return (
@@ -28,3 +35,13 @@ const RepoCards = React.memo(({ paginatedData }: Repos) => {
 });
 
 export default RepoCards;
+
+const useStyles = makeStyles({
+  indicator: {
+    margin: "2rem 0",
+    display: "flex",
+    flexGrow: 1,
+    justifyContent: "center",
+    alignContent: "center",
+  },
+});
