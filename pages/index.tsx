@@ -8,6 +8,7 @@ import {
   Input,
 } from "@material-ui/core";
 import React from "react";
+import { NextSeo } from "next-seo";
 import { QueryCache, useInfiniteQuery } from "react-query";
 import { dehydrate } from "react-query/hydration";
 import { getRepos } from "../api/getRepos";
@@ -84,30 +85,34 @@ export default function Landing() {
   }, [searchStr, setqueryStr]);
 
   return (
-    <Container maxWidth="xl" className={classes.root}>
-      <Box className={classes.header}>
-        <Input
-          className={classes.searchInput}
-          placeholder="Search for a topic"
-          value={searchStr}
-          onChange={handleSearchChange}
-          fullWidth
-        />
-        <Button variant="contained" onClick={handleSearch}>
-          Search
-        </Button>
-      </Box>
-      <RepoCards paginatedData={data} />
-      {/* //TODO: Design better UI/UX for fetching, loading, isFetchingMore, !canFetchMore states */}
-      <div ref={loadMoreRef}>
-        <Box className={classes.loading}>
-          {isFetchingMore && <CircularProgress size="5rem" />}
-          {data && !canFetchMore && (
-            <Typography variant="h2">That's it...</Typography>
-          )}
+    <>
+      <NextSeo
+        title={`Github Repo Explorer - ${queryStr}`}
+        description="Github Repository Explorer"
+      />
+      <Container maxWidth="xl" className={classes.root}>
+        <Box className={classes.header}>
+          <Input
+            className={classes.searchInput}
+            placeholder="Search for a topic"
+            value={searchStr}
+            onChange={handleSearchChange}
+            fullWidth
+          />
+          <Button variant="contained" onClick={handleSearch}>
+            Search
+          </Button>
         </Box>
-      </div>
-    </Container>
+        <RepoCards paginatedData={data} />
+        {/* //TODO: Design better UI/UX for fetching, loading, isFetchingMore, !canFetchMore states */}
+        <div ref={loadMoreRef}>
+          <Box className={classes.loading}>
+            {isFetchingMore && <CircularProgress size="5rem" />}
+            {data && !canFetchMore && <Typography>That's it...</Typography>}
+          </Box>
+        </div>
+      </Container>
+    </>
   );
 }
 
