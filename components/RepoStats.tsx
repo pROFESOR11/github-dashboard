@@ -27,14 +27,34 @@ export default function RepoStats({ stats }: RepoStatsProps) {
   const { stargazers_count, forks_count, watchers_count } = stats;
 
   const statisticItems = [
-    { id: "0", icon: <StarIcon color="action" />, text: stargazers_count },
-    { id: "1", icon: <ShareIcon color="action" />, text: forks_count },
-    { id: "2", icon: <PeopleIcon color="action" />, text: watchers_count },
+    {
+      id: "0",
+      icon: <StarIcon color="action" />,
+      text: stargazers_count,
+      tooltip: "Stars",
+    },
+    {
+      id: "1",
+      icon: <ShareIcon color="action" />,
+      text: forks_count,
+      tooltip: "Forks",
+    },
+    {
+      id: "2",
+      icon: <PeopleIcon color="action" />,
+      text: watchers_count,
+      tooltip: "Watchers",
+    },
   ];
   return (
     <Box className={classes.root}>
       {statisticItems.map((stat) => (
-        <RepoStat key={stat.id} icon={stat.icon} text={stat.text.toString()} />
+        <RepoStat
+          key={stat.id}
+          icon={stat.icon}
+          text={stat.text.toString()}
+          tooltip={stat.tooltip}
+        />
       ))}
     </Box>
   );
