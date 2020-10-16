@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { Avatar, CardHeader, Box } from "@material-ui/core";
 import RepoStats from "./RepoStats";
 import UpdateIcon from "@material-ui/icons/Update";
-import ClickableNavigator from "./ClickableNavigator";
+import WithTooltip from "./WithTooltip";
 
 const RepoCard = React.memo(({ repo }: { repo: Repo }) => {
   const {
@@ -34,19 +34,32 @@ const RepoCard = React.memo(({ repo }: { repo: Repo }) => {
       <CardHeader
         className={classes.header}
         avatar={
-          <ClickableNavigator url={ownerUrl} tooltip={`Go to ${login} profile`}>
+          <WithTooltip url={ownerUrl} tooltip={`Go to ${login} profile`}>
             <Avatar src={avatar_url} alt={login} />
-          </ClickableNavigator>
+          </WithTooltip>
         }
-        title={<Typography>{repoName}</Typography>}
+        title={
+          <WithTooltip
+            url={html_url}
+            tooltip="Open Repo"
+            tooltipProps={{
+              arrow: true,
+              placement: "bottom-start",
+            }}
+          >
+            <Typography>{repoName}</Typography>
+          </WithTooltip>
+        }
         subheader={
           <Box className={classes.subHeader}>
             <Typography>{login}</Typography>
             <Box className={classes.subHeaderRight}>
               <UpdateIcon />
-              <Typography className={classes.updatedText} variant="subtitle2">
-                {new Date(updated_at).toLocaleDateString()}
-              </Typography>
+              <WithTooltip tooltip="Last update">
+                <Typography className={classes.updatedText} variant="subtitle2">
+                  {new Date(updated_at).toLocaleDateString()}
+                </Typography>
+              </WithTooltip>
             </Box>
           </Box>
         }
