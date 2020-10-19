@@ -17,7 +17,7 @@ const RepoCards = React.memo(({ paginatedData }: Repos) => {
         <CircularProgress color="secondary" size="5rem" />
       </Box>
     );
-  if (paginatedData.length === 0) return <div>not found</div>;
+  if (paginatedData.length === 0) return <div>TODO: not found</div>;
 
   return (
     <Grid container spacing={3}>
