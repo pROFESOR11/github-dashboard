@@ -84,6 +84,14 @@ export default function Landing() {
     setqueryStr(searchStr);
   }, [searchStr, setqueryStr]);
 
+  function keyPress(
+    event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) {
+    if (event.key == "Enter") {
+      handleSearch();
+    }
+  }
+
   return (
     <>
       <NextSeo
@@ -93,6 +101,7 @@ export default function Landing() {
       <Container maxWidth="xl" className={classes.root}>
         <Box className={classes.header}>
           <Input
+            onKeyDown={keyPress}
             className={classes.searchInput}
             placeholder="Search for a topic"
             value={searchStr}
