@@ -48,6 +48,7 @@ export default function Landing() {
 
   const {
     data,
+    isError,
     fetchMore,
     canFetchMore,
     isFetching,
@@ -112,13 +113,13 @@ export default function Landing() {
             Search
           </Button>
         </Box>
-        <RepoCards paginatedData={data} />
-        {/* //TODO: Design better UI/UX for fetching, loading, isFetchingMore, !canFetchMore states */}
+        <RepoCards paginatedData={data} isError={isError} />
         <div ref={loadMoreRef}>
-          <Box className={classes.loading}>
-            {isFetchingMore && <CircularProgress size="5rem" />}
-            {data && !canFetchMore && <Typography>That's it...</Typography>}
-          </Box>
+          {isFetchingMore && (
+            <Box className={classes.loading}>
+              <CircularProgress size="5rem" />{" "}
+            </Box>
+          )}
         </div>
       </Container>
     </>

@@ -1,23 +1,44 @@
 import React from "react";
 import { SearchResponse } from "../api/types";
-import { Box, CircularProgress, Grid, makeStyles } from "@material-ui/core";
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import RepoCard from "./RepoCard";
 
 interface Repos {
   paginatedData: SearchResponse[] | undefined;
+  isError: Boolean;
 }
 
-const RepoCards = React.memo(({ paginatedData }: Repos) => {
+const RepoCards = React.memo(({ paginatedData, isError }: Repos) => {
   const classes = useStyles();
 
-  // TODO: Handle Not Found & Loading UI
+  if (isError) {
+    return (
+      <Box className={classes.indicator}>
+        <Typography color="textSecondary">Something went wrong</Typography>
+      </Box>
+    );
+  }
+
   if (!paginatedData)
     return (
       <Box className={classes.indicator}>
         <CircularProgress color="primary" size="5rem" />
       </Box>
     );
-  if (paginatedData.length === 0) return <div>TODO: not found</div>;
+  if (paginatedData.length === 0 || paginatedData[0]?.items?.length === 0)
+    return (
+      <Box className={classes.indicator}>
+        <Typography color="textSecondary">
+          No repo found with these keywords..
+        </Typography>
+      </Box>
+    );
 
   return (
     <Grid container spacing={3}>
