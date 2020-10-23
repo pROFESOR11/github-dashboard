@@ -3,7 +3,6 @@ import {
   Box,
   makeStyles,
   CircularProgress,
-  Typography,
   Button,
   Input,
 } from "@material-ui/core";
@@ -51,9 +50,7 @@ export default function Landing() {
     isError,
     fetchMore,
     canFetchMore,
-    isFetching,
     isFetchingMore,
-    ...rest
   } = useInfiniteQuery(["repos", queryStr], getRepos, {
     getFetchMore: (lastPage, allPages) => {
       // meaning there is no more to fetch
@@ -69,7 +66,7 @@ export default function Landing() {
   useIntersectionObserver({
     target: loadMoreRef,
     onIntersect: fetchMore,
-    enabled: canFetchMore,
+    enabled: canFetchMore && !isError,
     threshold: 0, // meaning as soon as even one pixel is visible, the callback will be run
   });
 
@@ -102,13 +99,15 @@ export default function Landing() {
       <Container maxWidth="xl" className={classes.root}>
         <Box className={classes.header}>
           <Input
+            id="search-repo"
+            inputProps={{ "aria-label": "Search for a topic" }}
             onKeyDown={keyPress}
-            className={classes.searchInput}
-            placeholder="Search for a topic"
             value={searchStr}
             onChange={handleSearchChange}
             fullWidth
+            className={classes.searchInput}
           />
+
           <Button variant="contained" onClick={handleSearch}>
             Search
           </Button>
@@ -117,7 +116,7 @@ export default function Landing() {
         <div ref={loadMoreRef}>
           {isFetchingMore && (
             <Box className={classes.loading}>
-              <CircularProgress size="5rem" />{" "}
+              <CircularProgress size="5rem" />
             </Box>
           )}
         </div>

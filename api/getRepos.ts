@@ -28,5 +28,6 @@ export async function getRepos(
     )
     .catch((err) => {
       console.log("err", err);
+      throw new Error("Limit reached!");
     });
 }

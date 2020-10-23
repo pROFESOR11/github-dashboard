@@ -20,7 +20,9 @@ const RepoCards = React.memo(({ paginatedData, isError }: Repos) => {
   if (isError) {
     return (
       <Box className={classes.indicator}>
-        <Typography color="textSecondary">Something went wrong</Typography>
+        <Typography color="textSecondary">
+          Something went wrong, try again in a few seconds..
+        </Typography>
       </Box>
     );
   }
