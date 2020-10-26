@@ -1,3 +1,6 @@
+
+![Github Dashboard Logo](https://i.ibb.co/Fq3kKkk/6f553507-4bea-4729-8545-45d8137c1ada-200x200.png)
+
 # Github Dashboard
 
 Search github repositories.
